@@ -317,6 +317,9 @@ class MainMenuUI(QDialog):
         elif project_name == "":
             self.errorTextSubjectLabel.setText(
                 "Add a project first!")  # user have no projects yet
+        elif added == "invalid entry":
+            self.errorTextSubjectLabel.setText(
+                "invalid entry")
 
         else:
             self.errorTextSubjectLabel.setText("Already added!")
