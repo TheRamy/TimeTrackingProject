@@ -1499,9 +1499,9 @@ border-radius:20px;
      <widget class="QLabel" name="totalTrackedTimeDurationLabel">
       <property name="geometry">
        <rect>
-        <x>170</x>
+        <x>160</x>
         <y>10</y>
-        <width>71</width>
+        <width>81</width>
         <height>20</height>
        </rect>
       </property>
