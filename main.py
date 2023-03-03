@@ -18,8 +18,6 @@ import utils.dbReader
 import utils.formating
 import utils.dbWriter
 
-#utils.dbWriter.update_subject_total_time ("ramy@ramy.nl", "Project01", "Subject01")
-
 
 
 #do = utils.dbReader.calculate_total_time("ramy@ramy.nl")
