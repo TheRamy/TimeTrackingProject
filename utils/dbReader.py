@@ -158,7 +158,7 @@ def sendSummaryEmail(emailTable, recipients):
     # using sendinblue instead of google SMTP
     with smtplib.SMTP('smtp-relay.sendinblue.com', 587) as smtp:
         smtp.starttls()
-        smtp.login('pomodoro250530@gmail.com', '2zPrxDQYZk1GgqBt')
+        smtp.login('pomodoro250530@gmail.com', 'xsmtpsib-044814fca09302fd8d21051d6e066233685443947250f7b622fde00f70a18d7c-Bj3rdm7vJS0GEfPt')
         smtp.send_message(msg)
 
 
