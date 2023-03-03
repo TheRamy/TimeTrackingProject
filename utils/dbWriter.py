@@ -25,7 +25,9 @@ def create_user(email, name):
     new_user = {
         "Email": email,
         "Name": name,
+        "TotalTrackedTime": "",
         "Recipients": [email],
+        "TotalTrackedTime": "",
         "Projects": []
     }
     data["PomodorosApp"]["Users"].append(new_user)
@@ -221,3 +223,39 @@ def delete_Recipient(userEmail, email_to_remove):
     save_data(data)
 
     return True
+
+
+
+def update_subject_total_time(email, project_name, subject_name, data=load_data()):
+    """Saves the total time spent on a subject"""
+    for user in data['PomodorosApp']['Users']:
+        if user['Email'] == email:
+            for project in user['Projects']:
+                if project['ProjectName'] == project_name:
+                    for subject in project['Subjects']:
+                        if subject['SubjectName'] == subject_name:
+                            subject['SubjectTotalTrackedTime'] = "ZZZZZZZZZZZZZZZZZZ"
+
+
+
+
+                            save_data(data)
+                            return True
+    return 0
+
+
+
+
+
+
+
+
+
+def save_totalTrackedTime(email, totalTrackedTime):
+    
+    data = load_data()
+
+    for user in data['PomodorosApp']['Users']:
+        if user['Email'] == email:
+            user['TotalTrackedTime'] = str(totalTrackedTime)
+            save_data(data)

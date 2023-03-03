@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 import json
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -19,7 +20,7 @@ def fetch_jsonDB():
 # read_json
 
 
-def user_exists(email, data):
+def user_exists(email, data=fetch_jsonDB()):
     """Checks if a user with a specific email exists in the database."""
     for user in data['PomodorosApp']['Users']:
         if user['Email'] == email:
@@ -27,7 +28,7 @@ def user_exists(email, data):
     return False
 
 
-def get_username_from_email(email, data):
+def get_username_from_email(email, data=fetch_jsonDB()):
     # return user's email
     for user in data['PomodorosApp']['Users']:
         if user['Email'] == email:
@@ -53,7 +54,7 @@ def get_project_subjects(email, project_name, data=fetch_jsonDB()):
     return []
 
 
-def get_subject_total_time(email, project_name, subject_name, data):
+def get_subject_total_time(email, project_name, subject_name, data=fetch_jsonDB()):
     """Returns the total tracked time for a specific subject."""
     for user in data['PomodorosApp']['Users']:
         if user['Email'] == email:
@@ -65,7 +66,7 @@ def get_subject_total_time(email, project_name, subject_name, data):
     return 0
 
 
-def get_subject_task_names(email, project_name, subject_name, data):
+def get_subject_task_names(email, project_name, subject_name, data=fetch_jsonDB()):
     """Returns the task names for each task under a specific subject."""
     for user in data['PomodorosApp']['Users']:
         if user['Email'] == email:
@@ -85,7 +86,7 @@ def get_user_recipients(email, data=fetch_jsonDB()):
     return []
 
 
-def get_project_total_time(email, project_name, data):
+def get_project_total_time(email, project_name, data=fetch_jsonDB()):
     """Returns the total tracked time for a specific project."""
     for user in data['PomodorosApp']['Users']:
         if user['Email'] == email:
@@ -95,7 +96,7 @@ def get_project_total_time(email, project_name, data):
     return 0
 
 
-def is_task_completed(email, project_name, subject_name, task_name, data):
+def is_task_completed(email, project_name, subject_name, task_name, data=fetch_jsonDB()):
     """Returns True if a specific task is marked as completed, and False otherwise."""
     for user in data['PomodorosApp']['Users']:
         if user['Email'] == email:
@@ -110,7 +111,7 @@ def is_task_completed(email, project_name, subject_name, task_name, data):
     return False
 
 
-def get_session_details(email, project_name, subject_name, data):
+def get_session_details(email, project_name, subject_name, data=fetch_jsonDB()):
     """Returns details about each PomodoroSession for a specific subject."""
     for user in data['PomodorosApp']['Users']:
         if user['Email'] == email:
@@ -159,6 +160,54 @@ def sendSummaryEmail(emailTable, recipients):
         smtp.starttls()
         smtp.login('pomodoro250530@gmail.com', '2zPrxDQYZk1GgqBt')
         smtp.send_message(msg)
+
+
+
+def calculate_subject_total_time(email, data=fetch_jsonDB()):
+    """Returns a dict for each subject DO NOT USE!!!!!!"""
+
+    total_time = {}
+    for user in data['PomodorosApp']['Users']:
+        if user['Email'] == email:
+            for project in user['Projects']:
+                for subject in project['Subjects']:
+                    subject_name = subject['SubjectName']
+                    subject_time = 0
+                    for session in subject['PomodoroSessions']:
+                        if session['EndTimestamp']: # if the session was marked as finished
+
+                            start = datetime.fromtimestamp(float(session['StartTimestamp']))
+                            end = datetime.fromtimestamp(float(session['EndTimestamp']))
+
+                            subject_time = end - start
+
+                            total_time[subject_name] = subject_time
+
+
+    return total_time
+
+
+
+
+
+
+def calculate_total_time(email, data=fetch_jsonDB()):
+    """total time spent on all sessisions for a user"""
+
+    total_time = 0
+    for user in data['PomodorosApp']['Users']:
+        if user['Email'] == email:
+            for project in user['Projects']:
+                for subject in project['Subjects']:
+                    for session in subject['PomodoroSessions']:
+                        if session['EndTimestamp']:
+                            start = datetime.fromtimestamp(float(session['StartTimestamp']))
+                            end = datetime.fromtimestamp(float(session['EndTimestamp']))
+                            subject_time = (end - start).total_seconds()
+                            total_time += subject_time
+
+    return timedelta(seconds=total_time) #total_time
+
 
 
 ##########################################################

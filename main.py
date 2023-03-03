@@ -18,6 +18,19 @@ import utils.dbReader
 import utils.formating
 import utils.dbWriter
 
+#utils.dbWriter.update_subject_total_time ("ramy@ramy.nl", "Project01", "Subject01")
+
+
+
+#do = utils.dbReader.calculate_total_time("ramy@ramy.nl")
+
+#print (do)
+
+#utils.dbWriter.save_totalTrackedTime("ramy@ramy.nl", do)
+#exit()
+
+
+
 
 
 class LoginUI(QDialog):
@@ -30,7 +43,7 @@ class LoginUI(QDialog):
 
         self.signUpButton.clicked.connect(self.signUp)
         # for testing - remove in the final version!!!!
-        self.emailInputLogin.setText("")
+        self.emailInputLogin.setText("ramy.pro@yandex.com")
         # hide error messaages in the GUI by default
         self.errorTextSignUp.setText("")
         self.errorTextLogin.setText("")
