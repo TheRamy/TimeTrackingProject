@@ -225,7 +225,6 @@ def delete_Recipient(userEmail, email_to_remove):
     return True
 
 
-
 def update_subject_total_time(email, project_name, subject_name, data=load_data()):
     """Saves the total time spent on a subject"""
     for user in data['PomodorosApp']['Users']:
@@ -236,23 +235,13 @@ def update_subject_total_time(email, project_name, subject_name, data=load_data(
                         if subject['SubjectName'] == subject_name:
                             subject['SubjectTotalTrackedTime'] = "ZZZZZZZZZZZZZZZZZZ"
 
-
-
-
                             save_data(data)
                             return True
     return 0
 
 
-
-
-
-
-
-
-
 def save_totalTrackedTime(email, totalTrackedTime):
-    
+
     data = load_data()
 
     for user in data['PomodorosApp']['Users']:

@@ -19,18 +19,6 @@ import utils.formating
 import utils.dbWriter
 
 
-
-#do = utils.dbReader.calculate_total_time("ramy@ramy.nl")
-
-#print (do)
-
-#utils.dbWriter.save_totalTrackedTime("ramy@ramy.nl", do)
-#exit()
-
-
-
-
-
 class LoginUI(QDialog):
     def __init__(self):
         super(LoginUI, self).__init__()
@@ -123,8 +111,9 @@ class MainMenuUI(QDialog):
         self.displayListsUI()
 
         data = utils.dbReader.fetch_jsonDB()
-        totalTrackedTime = str (utils.dbReader.calculate_total_time(userEmail,data))
-        print (totalTrackedTime)
+        totalTrackedTime = str(
+            utils.dbReader.calculate_total_time(userEmail, data))
+        print(totalTrackedTime)
         self.totalTrackedTimeDurationLabel.setText(totalTrackedTime)
 
         # self.displayTrackingHistory()
@@ -229,7 +218,7 @@ class MainMenuUI(QDialog):
                 self.summaryTableValuesWidget.setItem(
                     row_count, 4, e_item)  # tasks False
 
-        elif which_project == "All" :  # and which_subject == "All":
+        elif which_project == "All":  # and which_subject == "All":
 
             data = utils.dbReader.fetch_jsonDB()
             allUserProjects = utils.dbReader.get_user_projects(userEmail, data)
@@ -518,7 +507,7 @@ class MainMenuUI(QDialog):
             userEmail, selected_project_name, data)
 
         self.showSummarySubjectCombo.clear()
-        #self.showSummarySubjectCombo.addItem("All")
+        # self.showSummarySubjectCombo.addItem("All")
 
         for subject in subjects_list:
             if subject != "All":
@@ -745,11 +734,10 @@ class PomodoroUI(QDialog):
 
         # if pomodoro_currentTask is None:
 
-        #pomodoro_currentTask
+        # pomodoro_currentTask
 
         utils.dbWriter.mark_task_as_completed(
             userEmail, pomodoroProjectName, pomodoroSubjectName, pomodoro_currentTask)
-        
 
         do = utils.dbReader.calculate_total_time(userEmail)
 
@@ -872,17 +860,13 @@ class LongBreakUI(QDialog):
             # print (pomodoroProjectName, pomodoroSubjectName, pomodoro_currentTask)
             utils.dbWriter.mark_task_as_completed(
                 userEmail, pomodoroProjectName, pomodoroSubjectName, pomodoro_currentTask)
-            
+
             do = utils.dbReader.calculate_total_time(userEmail)
 
             utils.dbWriter.save_totalTrackedTime(userEmail, do)
 
-            
             utils.formating.show_popup(
                 f"Task {pomodoro_currentTask} was marked as completed!")
-
-
-
 
             # global pomodoroListofCompletedTasks
             # pomodoroListofCompletedTasks = []

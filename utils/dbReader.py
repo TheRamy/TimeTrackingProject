@@ -162,7 +162,6 @@ def sendSummaryEmail(emailTable, recipients):
         smtp.send_message(msg)
 
 
-
 def calculate_subject_total_time(email, data=fetch_jsonDB()):
     """Returns a dict for each subject DO NOT USE!!!!!!"""
 
@@ -174,21 +173,18 @@ def calculate_subject_total_time(email, data=fetch_jsonDB()):
                     subject_name = subject['SubjectName']
                     subject_time = 0
                     for session in subject['PomodoroSessions']:
-                        if session['EndTimestamp']: # if the session was marked as finished
+                        if session['EndTimestamp']:  # if the session was marked as finished
 
-                            start = datetime.fromtimestamp(float(session['StartTimestamp']))
-                            end = datetime.fromtimestamp(float(session['EndTimestamp']))
+                            start = datetime.fromtimestamp(
+                                float(session['StartTimestamp']))
+                            end = datetime.fromtimestamp(
+                                float(session['EndTimestamp']))
 
                             subject_time = end - start
 
                             total_time[subject_name] = subject_time
 
-
     return total_time
-
-
-
-
 
 
 def calculate_total_time(email, data=fetch_jsonDB()):
@@ -201,13 +197,14 @@ def calculate_total_time(email, data=fetch_jsonDB()):
                 for subject in project['Subjects']:
                     for session in subject['PomodoroSessions']:
                         if session['EndTimestamp']:
-                            start = datetime.fromtimestamp(float(session['StartTimestamp']))
-                            end = datetime.fromtimestamp(float(session['EndTimestamp']))
+                            start = datetime.fromtimestamp(
+                                float(session['StartTimestamp']))
+                            end = datetime.fromtimestamp(
+                                float(session['EndTimestamp']))
                             subject_time = (end - start).total_seconds()
                             total_time += subject_time
 
-    return timedelta(seconds=total_time) #total_time
-
+    return timedelta(seconds=total_time)  # total_time
 
 
 ##########################################################
